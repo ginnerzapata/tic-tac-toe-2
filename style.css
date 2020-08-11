@@ -26,3 +26,31 @@ main {
 footer {
   padding-top: 36px;
 }
+
+/* Gradients */
+
+.orange-gradient {
+  background: linear-gradient(180deg, #f89c3b 0%, #f85690 100%);
+
+  border-radius: 10px;
+}
+.orange-gradient:hover {
+  box-shadow: 0px 4px 8px #882c46;
+}
+.green-gradient {
+  background: linear-gradient(180deg, #2cd57c 0%, #249fec 100%);
+
+  border-radius: 10px;
+}
+.green-gradient:hover {
+  box-shadow: 0px 4px 8px #0b4161;
+}
+
+/* Typography */
+h1 {
+  font-weight: bold;
+  font-size: 36px;
+}
+p {
+  color: #9a85f2;
+}
