@@ -1,0 +1,16 @@
+body {
+  background: linear-gradient(180deg, #301f7a 0%, #301f7a 100%);
+}
+main {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 56px;
+  background: #442cab;
+  border-radius: 16px;
+}
