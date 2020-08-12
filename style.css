@@ -4,11 +4,15 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
   color: white;
+  margin: 0;
+  padding: 0;
+  border: none;
 }
 
 body {
   background: linear-gradient(180deg, #301f7a 0%, #301f7a 100%);
 }
+/* layout */
 main {
   height: 100vh;
   display: flex;
@@ -17,12 +21,74 @@ main {
   justify-content: center;
 }
 #container {
-  max-width: 600px;
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
-  padding: 56px;
   background: #442cab;
   border-radius: 16px;
+  padding: 36px;
 }
+
+#board {
+  display: flex;
+  flex-wrap: wrap;
+  height: 60vh;
+  width: 90vw;
+  max-width: 400px;
+  max-height: 400px;
+}
+.board-card{
+  width: calc(33% - 24px);
+  height: calc(33% -24px);
+  background: #7056DE;
+  border-radius: 10px;
+  margin:12px ; 
+}
+
 footer {
   padding-top: 36px;
+}
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+/* Gradients */
+
+.orange-gradient {
+  background: linear-gradient(180deg, #f89c3b 0%, #f85690 100%);
+
+  border-radius: 10px;
+}
+.orange-gradient:hover {
+  box-shadow: 0px 4px 8px #882c46;
+}
+.green-gradient {
+  background: linear-gradient(180deg, #2cd57c 0%, #249fec 100%);
+
+  border-radius: 10px;
+}
+.green-gradient:hover {
+  box-shadow: 0px 4px 8px #0b4161;
+}
+
+/* Typography */
+h1 {
+  font-weight: bold;
+  font-size: 36px;
+}
+p {
+  color: #9a85f2;
+}
+.score {
+  font-size: 36px;
+  color: white;
+  font-weight: bold;
+}
+
+.current-player {
+  color: white;
 }
