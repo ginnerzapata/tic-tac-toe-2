@@ -10,7 +10,7 @@
 }
 
 body {
-  background: linear-gradient(180deg, #301f7a 0%, #301f7a 100%);
+  background: #301f7a;
 }
 /* layout */
 main {
@@ -26,7 +26,7 @@ main {
   margin: 0 auto;
   background: #442cab;
   border-radius: 16px;
-  padding: 36px;
+  padding: 36px 36px 24px 36px;
 }
 
 #board {
@@ -34,15 +34,24 @@ main {
   flex-wrap: wrap;
   height: 60vh;
   width: 90vw;
-  max-width: 400px;
-  max-height: 400px;
+  max-width: 600px;
+  justify-content: space-between;
 }
-.board-card{
-  width: calc(33% - 24px);
-  height: calc(33% -24px);
-  background: #7056DE;
+.board-card {
+  display: flex;
+  width: calc(100% / 3 - 12px);
+  height: calc(100% / 3 - 12px);
+  background: #7056de;
   border-radius: 10px;
-  margin:12px ; 
+  font-size: 64px;
+  font-weight: bold;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.board-card:hover {
+  box-shadow: 0px 4px 8px #301f7a;
 }
 
 footer {
@@ -52,26 +61,17 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-left: 12px;
-  margin-right: 12px;
 }
 
 /* Gradients */
 
 .orange-gradient {
   background: linear-gradient(180deg, #f89c3b 0%, #f85690 100%);
-
-  border-radius: 10px;
-}
-.orange-gradient:hover {
   box-shadow: 0px 4px 8px #882c46;
 }
+
 .green-gradient {
   background: linear-gradient(180deg, #2cd57c 0%, #249fec 100%);
-
-  border-radius: 10px;
-}
-.green-gradient:hover {
   box-shadow: 0px 4px 8px #0b4161;
 }
 
