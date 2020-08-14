@@ -36,7 +36,6 @@ const board = (() => {
     { class: "board-card", id: "8" },
   ];
   const playedSpots = [];
-  const getWinningcombos = () => winningCombos;
   const renderBoardCards = () => {
     for (card of boardCards) {
       const div = document.createElement("div");
@@ -46,7 +45,7 @@ const board = (() => {
     }
   };
 
-  return { renderBoardCards };
+  return { renderBoardCards, playedSpots, winningCombos };
 })();
 
 const displayGameInfo = (() => {
@@ -70,14 +69,32 @@ const displayGameInfo = (() => {
 
 const gameLogic = (() => {
   let currentPlayer = player1;
+
   const changeCurrentPlayer = () => {
     currentPlayer === player1
       ? (currentPlayer = player2)
       : (currentPlayer = player1);
   };
+
+  const checkIfWinner = (arr) => {};
+
+  //dom manupulation and logic. Must be simplified
   DOM._board.addEventListener("click", (e) => {
-    e.target.classList.add("green-gradient");
-    e.target.innerText = currentPlayer.marker;
+    if (e.target.className.includes("gradient")) {
+      return;
+    }
+    if (e.target.className.includes("board-card")) {
+      let gradient =
+        currentPlayer === player1 ? "orange-gradient" : "green-gradient";
+
+      e.target.classList.add(gradient);
+      e.target.innerText = currentPlayer.marker;
+
+      board.playedSpots.push(e.target.id);
+      currentPlayer.movements.push(e.target.id);
+      checkIfWinner(board.winningCombos);
+      changeCurrentPlayer();
+    }
   });
 
   return { changeCurrentPlayer, currentPlayer };
