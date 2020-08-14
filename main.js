@@ -1,3 +1,15 @@
+const DEAFULTBOARD = [
+  { class: "board-card", id: "0" },
+  { class: "board-card", id: "1" },
+  { class: "board-card", id: "2" },
+  { class: "board-card", id: "3" },
+  { class: "board-card", id: "4" },
+  { class: "board-card", id: "5" },
+  { class: "board-card", id: "6" },
+  { class: "board-card", id: "7" },
+  { class: "board-card", id: "8" },
+];
+
 const Player = (name, marker) => {
   const movements = [];
   let score = 0;
@@ -24,17 +36,7 @@ const board = (() => {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  const boardCards = [
-    { class: "board-card", id: "0" },
-    { class: "board-card", id: "1" },
-    { class: "board-card", id: "2" },
-    { class: "board-card", id: "3" },
-    { class: "board-card", id: "4" },
-    { class: "board-card", id: "5" },
-    { class: "board-card", id: "6" },
-    { class: "board-card", id: "7" },
-    { class: "board-card", id: "8" },
-  ];
+  let boardCards = [...DEAFULTBOARD];
   const playedSpots = [];
   const renderBoardCards = () => {
     for (card of boardCards) {
@@ -44,8 +46,12 @@ const board = (() => {
       DOM._board.appendChild(div);
     }
   };
+  const reset = () => {
+    DOM._board.innerHTML = "";
+    boardCards = [...DEAFULTBOARD];
+  };
 
-  return { renderBoardCards, playedSpots, winningCombos };
+  return { renderBoardCards, playedSpots, winningCombos, reset };
 })();
 
 const displayGameInfo = (() => {
@@ -53,7 +59,7 @@ const displayGameInfo = (() => {
     const displayHTML = `
       <div class="game-info">
         <p>${player1.name}</p>
-        <p>current player</p>
+        <p>Current player</p>
         <p>${player2.name}</p>
       </div>
       <div class="game-info" id="scores">
@@ -76,8 +82,11 @@ const gameLogic = (() => {
       : (currentPlayer = player1);
   };
 
-  const checkIfWinner = (arr) => {};
-
+  const checkIfWinner = (arr) => {
+    for (combo of arr) {
+      if (combo.every((n) => currentPlayer.movements.includes(n))) return true;
+    }
+  };
   //dom manupulation and logic. Must be simplified
   DOM._board.addEventListener("click", (e) => {
     if (e.target.className.includes("gradient")) {
@@ -90,12 +99,22 @@ const gameLogic = (() => {
       e.target.classList.add(gradient);
       e.target.innerText = currentPlayer.marker;
 
-      board.playedSpots.push(e.target.id);
-      currentPlayer.movements.push(e.target.id);
-      checkIfWinner(board.winningCombos);
+      board.playedSpots.push(+e.target.id);
+      currentPlayer.movements.push(+e.target.id);
+      if (checkIfWinner(board.winningCombos)) {
+        console.log(`${currentPlayer.name} Wins!`);
+        win();
+      }
       changeCurrentPlayer();
     }
   });
+  const win = () => {
+    currentPlayer.score++;
+    DOM._container.innerHTML = `
+    <img src="img/winner.svg" alt="trophy" />
+    <h1>${currentPlayer.name} Wins</h1>
+    <button >Play Again</button>`;
+  };
 
   return { changeCurrentPlayer, currentPlayer };
 })();
