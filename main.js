@@ -17,9 +17,6 @@ const Player = (name) => {
   return { name, marker, movements, score };
 };
 
-let player1 = Player("Ginner", "G");
-let player2 = Player("Lucia", "L");
-
 const DOM = (() => {
   const _container = document.getElementById("container");
   //const _board = document.getElementById("board");
@@ -51,6 +48,8 @@ const board = (() => {
     DOM._container.appendChild(_board);
   };
   const reset = () => {
+    const { player1, player2 } = gameLogic.getConfig();
+
     board.playedSpots.length = 0;
     player1.movements.length = 0;
     player2.movements.length = 0;
@@ -63,6 +62,7 @@ const board = (() => {
 
 const displayGameInfo = (() => {
   const renderDisplay = () => {
+    const { currentPlayer, player1, player2 } = gameLogic.getConfig();
     const displayHTML = `
       <div class="game-info">
         <p>${player1.name}</p>
@@ -71,7 +71,7 @@ const displayGameInfo = (() => {
       </div>
       <div class="game-info" id="scores">
         <p class="score">${player1.score}</p>
-        <p class="current-player">${gameLogic.currentPlayer.name}</p>
+        <p class="current-player">${currentPlayer.name}</p>
         <p class="score">${player2.score}</p>
       </div>
     `;
@@ -81,49 +81,49 @@ const displayGameInfo = (() => {
 })();
 
 const gameLogic = (() => {
-  let currentPlayer = player1;
+  let config = {};
+
+  DOM._container.addEventListener("submit", (e) => {
+    e.preventDefault();
+    gameLogic.newGame();
+  });
 
   const changeCurrentPlayer = () => {
-    currentPlayer === player1
-      ? (currentPlayer = player2)
-      : (currentPlayer = player1);
+    config.currentPlayer === config.player1
+      ? (config.currentPlayer = config.player2)
+      : (config.currentPlayer = config.player1);
     if (DOM._container.querySelector(".current-player")) {
       DOM._container.querySelector(".current-player").innerText =
-        currentPlayer.name;
+        config.currentPlayer.name;
     }
   };
 
   const checkIfWinner = (arr) => {
     for (combo of arr) {
-      if (combo.every((n) => currentPlayer.movements.includes(n))) return true;
+      if (combo.every((n) => config.currentPlayer.movements.includes(n)))
+        return true;
     }
   };
   //dom manupulation and logic. Must be simplified
-  DOM._container.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const p1 = document.getElementById("player1");
-    const p2 = document.getElementById("player2");
-    player1 = Player(p1.value);
-    player2 = Player(p2.value);
-    gameLogic.newGame();
-  });
 
   DOM._container.addEventListener("click", (e) => {
     if (e.target.className.includes("gradient")) {
       return;
     }
     if (e.target.tagName === "BUTTON") {
-      gameLogic.newGame();
+      gameLogic.newRound();
     }
     if (e.target.className.includes("board-card")) {
       let gradient =
-        currentPlayer === player1 ? "orange-gradient" : "green-gradient";
+        config.currentPlayer === config.player1
+          ? "orange-gradient"
+          : "green-gradient";
 
       e.target.classList.add(gradient);
-      e.target.innerText = currentPlayer.marker;
+      e.target.innerText = config.currentPlayer.marker;
 
       board.playedSpots.push(+e.target.id);
-      currentPlayer.movements.push(+e.target.id);
+      config.currentPlayer.movements.push(+e.target.id);
       if (!checkIfWinner(board.winningCombos) && board.playedSpots.length >= 9)
         draw();
       if (checkIfWinner(board.winningCombos)) {
@@ -140,20 +140,40 @@ const gameLogic = (() => {
     <button >Play Again</button>`;
   };
   const win = () => {
-    currentPlayer.score++;
+    config.currentPlayer.score++;
     DOM._container.innerHTML = `
     <img src="img/winner.svg" alt="trophy" />
-    <h1>${currentPlayer.name} Wins</h1>
+    <h1>${config.currentPlayer.name} Wins</h1>
     <button >Play Again</button>`;
   };
+  const setConfig = () => {
+    const p1 = document.getElementById("player1");
+    const p2 = document.getElementById("player2");
+    const player1 = Player(p1.value);
+    const player2 = Player(p2.value);
 
+    config = { player1, player2, currentPlayer: player1 };
+  };
   const newGame = () => {
+    setConfig();
     board.reset();
     displayGameInfo.renderDisplay();
     board.renderBoardCards();
   };
 
-  return { changeCurrentPlayer, currentPlayer, newGame };
+  const newRound = () => {
+    board.reset();
+    displayGameInfo.renderDisplay();
+    board.renderBoardCards();
+  };
+  const getConfig = () => config;
+
+  return {
+    changeCurrentPlayer,
+    newGame,
+    getConfig,
+    newRound,
+  };
 })();
 
 const form = (() => {
