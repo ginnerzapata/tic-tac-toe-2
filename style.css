@@ -34,6 +34,7 @@ main {
   flex-wrap: wrap;
   height: 60vh;
   width: 90vw;
+  max-height: 800px;
   max-width: 600px;
   justify-content: space-between;
 }
@@ -62,7 +63,29 @@ footer {
   justify-content: space-between;
   align-items: center;
 }
+form {
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  width: 90vw;
+  max-height: 200px;
+  max-width: 400px;
+}
 
+input[type="text"] {
+  padding: 8px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  background: #7056de;
+}
+input[type="text"]::placeholder {
+  color: #baadf1;
+}
+input[type="text"]:focus {
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+}
 /* Gradients */
 
 .orange-gradient {
@@ -85,7 +108,14 @@ button {
 button:hover {
   box-shadow: 0px 4px 8px #0b4161;
 }
-
+input[type="submit"] {
+  background: linear-gradient(180deg, #2cd57c 0%, #249fec 100%);
+  padding: 8px;
+  border-radius: 8px;
+}
+input[type="submit"]:hover {
+  box-shadow: 0px 4px 8px #0b4161;
+}
 /* Typography */
 h1 {
   font-weight: bold;
@@ -102,4 +132,9 @@ p {
 
 .current-player {
   color: white;
+}
+form p {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 24px;
 }
