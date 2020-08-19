@@ -99,6 +99,9 @@ input[type="text"]:focus {
   box-shadow: 0px 4px 8px #0b4161;
   cursor: not-allowed;
 }
+.result {
+  margin: 8px auto;
+}
 button {
   background: linear-gradient(180deg, #2cd57c 0%, #249fec 100%);
   padding: 8px;

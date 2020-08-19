@@ -136,14 +136,14 @@ const gameLogic = (() => {
   const draw = () => {
     DOM._container.innerHTML = `
     <img src="img/draw.svg" alt="trophy" />
-    <h1>It's a draw</h1>
+    <h1 class='result'>It's a draw</h1>
     <button >Play Again</button>`;
   };
   const win = () => {
     config.currentPlayer.score++;
     DOM._container.innerHTML = `
     <img src="img/winner.svg" alt="trophy" />
-    <h1>${config.currentPlayer.name} Wins</h1>
+    <h1 class='result'>${config.currentPlayer.name} Wins</h1>
     <button >Play Again</button>`;
   };
   const setConfig = () => {
